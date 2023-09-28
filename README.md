@@ -1,1 +1,3 @@
-# Banking-Cli-Application
+# PHPCLiExpenseTracker
+
+Run index.php and start executing the script
