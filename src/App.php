@@ -11,7 +11,7 @@ require_once 'vendor/autoload.php';
 
 class App
 {
-    use FileWriting;
+    use FileWriting, FilePathExists;
     public string $phpFilePath = 'output.php';
     public string $email;
     public string $password;
@@ -79,7 +79,7 @@ class App
                 }
 
                 if (isset($users)) {
-                    include 'output.php';
+                    $this->filePathExists();
                     $this->check_email_exists = $this->checkUserEmailExists(array: $this->users, email: $this->email);
                 } else {
                     $this->check_email_exists = false;
@@ -110,19 +110,16 @@ class App
                     $values = [$this->name, $this->email, $hashed_password, $this->balance];
                     $keys = ['name', 'email', 'password', 'balance'];
                     $array_combine = array_combine($keys, $values);
-                    if (!isset($users)) {
-                        $users = [];
+                    if (!isset($this->users)) {
+                        $this->users = [];
                     }
-                    include 'output.php';
-                    array_push($users, $array_combine);
-                    $this->write(array: $users, file: $this->file, phpFilePath: $this->phpFilePath);
+                    $this->filePathExists();
+                    array_push($this->users, $array_combine);
+                    $this->write(array: $this->users, file: $this->file, phpFilePath: $this->phpFilePath);
                 }
             }
             if ($readline == MenuNumbers::THIRD) {
                 exit();
-            }
-            if ($readline == 4) {
-                var_dump($users);
             }
         }
     }
