@@ -21,6 +21,8 @@ class App
     public array $users;
     public bool $check_email_exists;
 
+
+
     public function filePathExists(): void
     {
         // Check if the PHP file already exists
@@ -78,13 +80,23 @@ class App
                     echo "It is not an appropriate email address" . PHP_EOL;
                 }
 
+                // $this->filePathExists();
+                if (file_exists('output.php')) {
+                    include 'output.php';
+                }
                 if (isset($users)) {
-                    $this->filePathExists();
-                    $this->check_email_exists = $this->checkUserEmailExists(array: $this->users, email: $this->email);
+                    //$this->filePathExists();
+
+
+                    $this->check_email_exists = Registration::checkUserEmailExists(
+                        array: $users,
+                        email: $this->email
+                    );
                 } else {
                     $this->check_email_exists = false;
                 }
                 if ($this->check_email_exists) {
+
                     echo "The email already exists in database";
                 }
 
@@ -118,7 +130,7 @@ class App
                     $this->write(array: $this->users, file: $this->file, phpFilePath: $this->phpFilePath);
                 }
             }
-            if ($readline == MenuNumbers::THIRD) {
+            if ($readline == 3) {
                 exit();
             }
         }

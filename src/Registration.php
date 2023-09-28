@@ -20,4 +20,30 @@ class Registration
             return false;
         }
     }
+
+    public function formValidation(string $password, string $name, float $balance)
+    {
+        if (strlen($password) < 8) {
+            echo "Your password count needs to be greater or equal to 8" . PHP_EOL;
+        }
+
+        if (strlen($name) < 8) {
+            echo "Your name must be at least 8 characters" . PHP_EOL;
+        }
+        if ($balance < 0) {
+            echo "Your balance cannot be negative";
+        }
+    }
+    function register($inputemail, $name, $password, $users)
+    {
+        if (filter_var($inputemail, FILTER_VALIDATE_EMAIL) && strlen($name) >= 8 && strlen($password) >= 8) {
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+            $values = [$name, $inputemail, $hashed_password];
+            $keys = ['name', 'email', 'password'];
+            $array_combine = array_combine($keys, $values);
+            // var_dump($array_combine);
+            array_push($users, $array_combine);
+            var_dump($users);
+        }
+    }
 }
