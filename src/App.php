@@ -48,7 +48,7 @@ class App
         }
     }
 
-    public function main()
+    public function main(Registration $registration)
     {
 
         Menu::allMenu();
@@ -100,17 +100,12 @@ class App
                     echo "The email already exists in database";
                 }
 
+                echo  $registration->formValidation(
+                    password: $this->password,
+                    name: $this->name,
+                    balance: $this->balance
+                );
 
-                if (strlen($this->password) < 8) {
-                    echo "Your password count needs to be greater or equal to 8" . PHP_EOL;
-                }
-
-                if (strlen($this->name) < 8) {
-                    echo "Your name must be at least 8 characters" . PHP_EOL;
-                }
-                if ($this->balance < 0) {
-                    echo "Your balance cannot be negative";
-                }
 
                 if (
                     filter_var($this->email, FILTER_VALIDATE_EMAIL) && !$this->check_email_exists
