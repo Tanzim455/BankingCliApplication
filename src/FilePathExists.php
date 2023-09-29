@@ -6,13 +6,13 @@ namespace App;
 
 trait FilePathExists
 {
-    public function filePathExists(string $phpFilePath, array $array): void
+    protected $users;
+
+    public function filePathExists(): void
     {
-        // Check if the PHP file already exists
-        if (file_exists($phpFilePath)) {
-            // Include the existing PHP file to access its data
-            include $phpFilePath;
-            $this->array = $array;
+        if (file_exists($this->phpFilePath)) {
+            include $this->phpFilePath;
+            $this->users = $users;
         }
     }
 }

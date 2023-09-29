@@ -11,7 +11,7 @@ require_once 'vendor/autoload.php';
 
 class App
 {
-    use FileWriting, FilePathExists;
+    use FileWriting;
     public string $phpFilePath = 'output.php';
     public string $email;
     public string $password;
@@ -33,20 +33,7 @@ class App
         }
     }
 
-    public function checkUserEmailExists($array, string $email): bool
-    {
 
-        if (isset($array)) {
-            $all_users_email = array_column($array, 'email');
-            if (in_array($email, $all_users_email)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
     public function main(Registration $registration)
     {
@@ -100,7 +87,7 @@ class App
                     echo "The email already exists in database";
                 }
 
-                echo  $registration->formValidation(
+                $registration->formValidation(
                     password: $this->password,
                     name: $this->name,
                     balance: $this->balance

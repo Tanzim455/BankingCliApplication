@@ -21,17 +21,17 @@ class Registration
         }
     }
 
-    public function formValidation(string $password, string $name, float $balance): string
+    public function formValidation(string $password, string $name, float $balance): void
     {
         if (strlen($password) < 8) {
-            return "Your password count needs to be greater or equal to 8" . PHP_EOL;
+            echo "Your password count needs to be greater or equal to 8" . PHP_EOL;
         }
 
         if (strlen($name) < 8) {
-            return "Your name must be at least 8 characters" . PHP_EOL;
+            echo "Your name must be at least 8 characters" . PHP_EOL;
         }
         if ($balance < 0) {
-            return "Your balance cannot be negative";
+            echo  "Your balance cannot be negative";
         }
     }
     function register($inputemail, $name, $password, $users)
