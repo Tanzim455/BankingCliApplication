@@ -33,21 +33,12 @@ class Login
             }
         }
     }
-    public function viewBalance($filtered_email)
+    public function viewBalance($filtered_email): float
     {
         if ($filtered_email) {
             ['balance' => $balance] = $this->flattenArray(filtered_email: $filtered_email);
 
             return $balance;
         }
-    }
-
-    public function transactionKeyValues(string $to, string $type, int $amount, array $array): void
-    {
-        $transaction_keys = ['to', 'type', 'amount'];
-        $transaction_values = [$to, $type, $amount];
-        $transaction_array_combine = array_combine($transaction_keys, $transaction_values);
-        array_push($array, $transaction_array_combine);
-        var_dump($array);
     }
 }

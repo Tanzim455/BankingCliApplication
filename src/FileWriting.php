@@ -6,9 +6,9 @@ namespace App;
 
 trait FileWriting
 {
-    public static function write(array $array, $file, string $phpFilePath)
+    public static function write(array $array, $file, string $filePath)
     {
-        $file = fopen($phpFilePath, "w");
+        $file = fopen($filePath, "w");
 
         if ($file) {
             // Write the updated categories associative array to the PHP file
@@ -17,7 +17,7 @@ trait FileWriting
             // Close the PHP file
             fclose($file);
 
-            echo "Data has been updated in $phpFilePath." . PHP_EOL;
+            echo "Data has been updated in $filePath." . PHP_EOL;
         } else {
             echo "Failed to open the PHP file for writing." . PHP_EOL;
         }

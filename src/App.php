@@ -13,6 +13,7 @@ class App
 {
     use FileWriting;
     public string $phpFilePath = 'output.php';
+    public string $transactionFilePath = 'transcation.php';
     public string $email;
     public string $password;
     public string $name;
@@ -64,13 +65,14 @@ class App
                     }
                     $result = $login->login(filtered_email: $filtered_email, inputpassword: $this->password);
                     $balance = $login->viewBalance(filtered_email: $filtered_email);
+                    ['email' => $authuseremail] = $login->flattenArray(filtered_email: $filtered_email);
                     if ($result) {
                         // $loginreadline = readline("Select an option: ");
                         echo Menu::loginMenu() . PHP_EOL;
                         $loginreadline = readline("Select an option: ");
                         echo "$loginreadline \n";
                         if ($loginreadline = MenuNumbers::FOUR) {
-                            echo "Your balance is $balance \n";
+                            echo "Your balance is $balance and email is $authuseremail \n";
                         }
                     }
                 }

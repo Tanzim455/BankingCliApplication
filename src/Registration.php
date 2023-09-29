@@ -64,7 +64,7 @@ class Registration
             // }
             array_push($array, $array_combine);
 
-            $this->write(array: $array, file: $file, phpFilePath: $phpFilePath);
+            $this->write(array: $array, file: $file, filePath: $phpFilePath);
         }
     }
 }
