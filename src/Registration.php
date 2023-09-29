@@ -59,7 +59,9 @@ class Registration
             $values = [$name, $email, $hashed_password, $balance];
             $keys = ['name', 'email', 'password', 'balance'];
             $array_combine = array_combine($keys, $values);
-
+            // if (!isset($array)) {
+            //     $array = [];
+            // }
             array_push($array, $array_combine);
 
             $this->write(array: $array, file: $file, phpFilePath: $phpFilePath);

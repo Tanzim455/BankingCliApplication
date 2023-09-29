@@ -84,6 +84,9 @@ class App
 
                     echo "The email already exists in database";
                 }
+                if (!isset($users)) {
+                    $this->users = [];
+                }
 
                 $registration->register(
                     email: $this->email,

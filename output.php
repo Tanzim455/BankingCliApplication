@@ -2,30 +2,23 @@
 $users= array (
   0 => 
   array (
-    'name' => 'TanzimIbthesam',
-    'email' => 'tanzim89@gmail.com',
-    'password' => '$2y$10$04V15dlLTR5TTvsUhamJVe72MMgXL8MpKhzav5s.SAwGUlmLGuCse',
-    'balance' => 2500.0,
+    'name' => 'Tanzim Ibthesam',
+    'email' => 'tanzim@gmail.com',
+    'password' => '$2y$10$I80i/CM4THjPRbPPz4hnWejdS/FpMHNSQzeaUtDqQ4SUMnSS27stW',
+    'balance' => 1200.0,
   ),
   1 => 
   array (
-    'name' => 'tanzimIbthesam',
+    'name' => 'Tanzim Ibthesam',
     'email' => 'tanzim67@gmail.com',
-    'password' => '$2y$10$OMAjVrA1iRZSxNLh44JAPOcK7mFd7ge8FfV7PlfVlMJKA4TdNclWe',
-    'balance' => 2500.0,
+    'password' => '$2y$10$P/IfzW5ET5LYsYyPq7h7IeXW9z9LZzBw1Hfuh.udcjJG/CQZWpYJ.',
+    'balance' => 1200.0,
   ),
   2 => 
   array (
     'name' => 'Tanzim Ibthesam',
-    'email' => 'tanzim90@gmail.com',
-    'password' => '$2y$10$7Fej6jHAXsKettOsV.U2SeRYCVE1OSGnnUpK3LdC95WMcPQWlFdr2',
-    'balance' => 1200.0,
-  ),
-  3 => 
-  array (
-    'name' => 'Tanzim Ibthesam',
-    'email' => 'tanzim@gmail.com',
-    'password' => '$2y$10$67OOyYo1Tnk2/K1.ZA3m4eBrXUIURFKp4ucbshIqspX7uwWaIMupG',
+    'email' => 'tanzim87@gmail.com',
+    'password' => '$2y$10$qMyyvCCJzdBndZo1MAP6xOyHMZQ6R6ZCalNbKvdGVS8gGu9OG2WlW',
     'balance' => 1200.0,
   ),
 );
