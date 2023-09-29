@@ -6,6 +6,7 @@ namespace App;
 
 class Registration
 {
+    use FileWriting;
     public static function checkUserEmailExists($array, string $email): bool
     {
 
@@ -21,8 +22,11 @@ class Registration
         }
     }
 
-    public function formValidation(string $password, string $name, float $balance): void
+    public function formValidation(string $email, string $password, string $name, float $balance): void
     {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "It is not an appropriate email address" . PHP_EOL;
+        }
         if (strlen($password) < 8) {
             echo "Your password count needs to be greater or equal to 8" . PHP_EOL;
         }
@@ -34,16 +38,31 @@ class Registration
             echo  "Your balance cannot be negative";
         }
     }
-    function register($inputemail, $name, $password, $users)
-    {
-        if (filter_var($inputemail, FILTER_VALIDATE_EMAIL) && strlen($name) >= 8 && strlen($password) >= 8) {
+    public function register(
+        string $email,
+        string $name,
+        string $password,
+        float $balance,
+        array $array,
+        $file,
+        string $phpFilePath,
+        bool $check_email_exists,
+
+    ): void {
+        $this->formValidation(email: $email, password: $password, name: $name, balance: $balance);
+        if (
+            filter_var($email, FILTER_VALIDATE_EMAIL) && !$check_email_exists
+            && strlen($name) >= 8 && strlen($password) >= 8
+            && $balance > 0
+        ) {
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-            $values = [$name, $inputemail, $hashed_password];
-            $keys = ['name', 'email', 'password'];
+            $values = [$name, $email, $hashed_password, $balance];
+            $keys = ['name', 'email', 'password', 'balance'];
             $array_combine = array_combine($keys, $values);
-            // var_dump($array_combine);
-            array_push($users, $array_combine);
-            var_dump($users);
+
+            array_push($array, $array_combine);
+
+            $this->write(array: $array, file: $file, phpFilePath: $phpFilePath);
         }
     }
 }

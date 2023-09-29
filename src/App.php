@@ -63,16 +63,14 @@ class App
                 $this->balance = floatval(trim(fgets(STDIN)));
 
 
-                if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-                    echo "It is not an appropriate email address" . PHP_EOL;
-                }
+
 
                 // $this->filePathExists();
                 if (file_exists('output.php')) {
                     include 'output.php';
                 }
                 if (isset($users)) {
-                    //$this->filePathExists();
+                    $this->filePathExists();
 
 
                     $this->check_email_exists = Registration::checkUserEmailExists(
@@ -87,30 +85,17 @@ class App
                     echo "The email already exists in database";
                 }
 
-                $registration->formValidation(
+                $registration->register(
+                    email: $this->email,
                     password: $this->password,
                     name: $this->name,
-                    balance: $this->balance
+                    balance: $this->balance,
+
+                    file: $this->file,
+                    phpFilePath: $this->phpFilePath,
+                    check_email_exists: $this->check_email_exists,
+                    array: $this->users,
                 );
-
-
-                if (
-                    filter_var($this->email, FILTER_VALIDATE_EMAIL) && !$this->check_email_exists
-                    && strlen($this->name) >= 8 && strlen($this->password) >= 8
-                    && $this->balance > 0
-                ) {
-                    $hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
-
-                    $values = [$this->name, $this->email, $hashed_password, $this->balance];
-                    $keys = ['name', 'email', 'password', 'balance'];
-                    $array_combine = array_combine($keys, $values);
-                    if (!isset($this->users)) {
-                        $this->users = [];
-                    }
-                    $this->filePathExists();
-                    array_push($this->users, $array_combine);
-                    $this->write(array: $this->users, file: $this->file, phpFilePath: $this->phpFilePath);
-                }
             }
             if ($readline == 3) {
                 exit();
