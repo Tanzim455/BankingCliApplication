@@ -52,6 +52,7 @@ class Transaction
         if ($type == "WithDraw") {
             $array[$array_key_index]['balance'] -= $amount;
         }
+
         if ($type == "Deposit") {
             $array[$array_key_index]['balance'] += $amount;
         }

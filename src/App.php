@@ -76,7 +76,7 @@ class App
                                 echo "Your balance is $balance\n";
                             }
                             if ($loginreadline == MenuNumbers::FIVE) {
-                                echo "Enter the amount to withdraw \n";
+                                echo "Enter the amount to deposit \n";
                                 $this->amount = floatval(trim(fgets(STDIN)));
                                 $this->to = $authuseremail;
                                 $this->type = "WithDraw";
@@ -92,7 +92,7 @@ class App
                                 if (!isset($transactions)) {
                                     $transactions = [];
                                 }
-                                if ($this->amount < $balance && $this->amount > 0) {
+                                if ($this->amount > 0 && $this->amount < $balance) {
                                     $transaction->transactionKeyValues(
                                         amount: $this->amount,
                                         to: $this->to,
@@ -108,7 +108,7 @@ class App
                                     }
 
 
-                                    $updateBalance = $transaction->addorDeductBalance(
+                                    $transaction->addorDeductBalance(
                                         array: $users,
                                         email: $authuseremail,
                                         type: $this->type,
@@ -116,10 +116,53 @@ class App
                                         file: $this->file,
                                         userFilePath: $this->phpFilePath,
                                     );
-
-                                    var_dump($updateBalance);
                                 }
                             }
+
+                            if ($loginreadline == MenuNumbers::SIX) {
+                                echo "Enter the amount to deposit \n";
+                                $this->amount = floatval(trim(fgets(STDIN)));
+                                $this->to = $authuseremail;
+                                $this->type = "Deposit";
+
+
+                                // $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
+
+                                if (file_exists('transactions.php')) {
+                                    include 'transactions.php';
+                                }
+
+
+                                if (!isset($transactions)) {
+                                    $transactions = [];
+                                }
+                                if ($this->amount > 0) {
+                                    $transaction->transactionKeyValues(
+                                        amount: $this->amount,
+                                        to: $this->to,
+                                        type: $this->type,
+                                        file: $this->file,
+                                        transactionFilePath: $this->transactionFilePath,
+                                        array: $transactions
+
+
+                                    );
+                                    if (file_exists('output.php')) {
+                                        include 'output.php';
+                                    }
+
+
+                                    $transaction->addorDeductBalance(
+                                        array: $users,
+                                        email: $authuseremail,
+                                        type: $this->type,
+                                        amount: $this->amount,
+                                        file: $this->file,
+                                        userFilePath: $this->phpFilePath,
+                                    );
+                                }
+                            }
+
                             if ($loginreadline == MenuNumbers::NINE) {
                                 exit();
                             }
