@@ -13,7 +13,7 @@ class App
 {
     use FileWriting;
     public string $phpFilePath = 'output.php';
-    public string $transactionFilePath = 'transcation.php';
+    public string $transactionFilePath = 'transactions.php';
     public string $email;
     public string $password;
     public string $name;
@@ -21,6 +21,10 @@ class App
     public $file;
     public array $users;
     public bool $check_email_exists;
+    // public array $transactions;
+    public float $amount;
+    public string $to;
+    public string $type;
 
 
 
@@ -33,15 +37,10 @@ class App
             $this->users = $users;
         }
     }
-    public function OnlyFileExists()
-    {
-        if (file_exists('output.php')) {
-            include 'output.php';
-        }
-    }
 
 
-    public function main(Registration $registration, Login $login)
+
+    public function main(Registration $registration, Login $login, Transaction $transaction)
     {
 
         Menu::mainMenu();
@@ -67,12 +66,45 @@ class App
                     $balance = $login->viewBalance(filtered_email: $filtered_email);
                     ['email' => $authuseremail] = $login->flattenArray(filtered_email: $filtered_email);
                     if ($result) {
-                        // $loginreadline = readline("Select an option: ");
-                        echo Menu::loginMenu() . PHP_EOL;
-                        $loginreadline = readline("Select an option: ");
-                        echo "$loginreadline \n";
-                        if ($loginreadline = MenuNumbers::FOUR) {
-                            echo "Your balance is $balance and email is $authuseremail \n";
+                        while (true) {
+                            echo Menu::loginMenu() . PHP_EOL;
+
+                            $loginreadline = readline("Select an option: ");
+
+                            if ($loginreadline == MenuNumbers::FOUR) {
+                                echo "Your balance is $balance\n";
+                            }
+                            if ($loginreadline == MenuNumbers::FIVE) {
+                                echo "Enter the amount to withdraw \n";
+                                $this->amount = floatval(trim(fgets(STDIN)));
+                                $this->to = $authuseremail;
+                                $this->type = "WithDraw";
+
+                                // if (!isset($transactions)) {
+                                //     $transactions = [];
+                                // }
+                                if (file_exists('transactions.php')) {
+                                    include 'transactions.php';
+                                }
+
+                                // var_dump($transactions);
+                                if (!isset($transactions)) {
+                                    $transactions = [];
+                                }
+                                $transaction->transactionKeyValues(
+                                    amount: $this->amount,
+                                    to: $this->to,
+                                    type: $this->type,
+                                    file: $this->file,
+                                    transactionFilePath: $this->transactionFilePath,
+                                    array: $transactions
+
+
+                                );
+                            }
+                            if ($loginreadline == MenuNumbers::NINE) {
+                                exit();
+                            }
                         }
                     }
                 }

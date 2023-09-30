@@ -10,7 +10,7 @@ class Transaction
     public function transactionKeyValues(
         string $to,
         string $type,
-        int $amount,
+        float $amount,
         array $array,
         $file,
         string $transactionFilePath
@@ -18,7 +18,15 @@ class Transaction
         $transaction_keys = ['to', 'type', 'amount'];
         $transaction_values = [$to, $type, $amount];
         $transaction_array_combine = array_combine($transaction_keys, $transaction_values);
+
+        // // var_dump($array);
+        // // if (file_exists('transactions.php')) {
+        // //     include 'transactions.php';
+        // // }
+        // var_dump($array);
+        // // var_dump($transactions);
         array_push($array, $transaction_array_combine);
-        $this->write(array: $array, file: $file, filePath: $transactionFilePath);
+
+        $this->write(array: $array, file: $file, filePath: $transactionFilePath, variableName: "transactions");
     }
 }

@@ -9,11 +9,12 @@ class Menu
     const LOGIN = "1.Login\n";
     const REGISTER = "2.Register\n";
     const EXIT = "3. Exit\n";
-    const BALANCE = "4. Balance\n";
-    const WITHDRAW = "5. WithDraw\n";
+    const BALANCE = "4.Balance\n";
+    const WITHDRAW = "5.WithDraw\n";
     const DEPOSIT  = "6. Deposit\n";
-    const TRANSFER  = "7. Transfer\n";
-
+    const TRANSFER  = "7.Transfer\n";
+    const TRANSACTIONS  = "8. View All Transactions\n";
+    const LOGINEXIT     = "9. ExitLogin\n";
 
     public static function mainMenu(): void
     {
@@ -29,5 +30,7 @@ class Menu
         echo MENU::WITHDRAW;
         echo Menu::DEPOSIT;
         echo Menu::TRANSFER;
+        echo MENU::TRANSACTIONS;
+        echo MENU::LOGINEXIT;
     }
 }
