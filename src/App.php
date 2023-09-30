@@ -23,6 +23,7 @@ class App
     public bool|array $check_email_exists;
     // public array $transactions;
     public float $amount;
+    public string $from;
     public string $to;
 
     public string $type;
@@ -78,6 +79,7 @@ class App
                             if ($loginreadline == MenuNumbers::FIVE) {
                                 echo "Enter the amount to withdraw \n";
                                 $this->amount = floatval(trim(fgets(STDIN)));
+                                $this->from = $authuseremail;
                                 $this->to = $authuseremail;
                                 $this->type = "WithDraw";
 
@@ -95,6 +97,7 @@ class App
                                 if ($this->amount > 0 && $this->amount < $balance) {
                                     $transaction->transactionKeyValues(
                                         amount: $this->amount,
+                                        from: $this->from,
                                         to: $this->to,
                                         type: $this->type,
                                         file: $this->file,
@@ -123,6 +126,7 @@ class App
                             if ($loginreadline == MenuNumbers::SIX) {
                                 echo "Enter the amount to deposit \n";
                                 $this->amount = floatval(trim(fgets(STDIN)));
+                                $this->from = $authuseremail;
                                 $this->to = $authuseremail;
                                 $this->type = "Deposit";
 
@@ -140,6 +144,7 @@ class App
                                 if ($this->amount > 0) {
                                     $transaction->transactionKeyValues(
                                         amount: $this->amount,
+                                        from: $this->from,
                                         to: $this->to,
                                         type: $this->type,
                                         file: $this->file,
@@ -170,6 +175,7 @@ class App
                                 echo "Enter the email of receiptment \n";
                                 $this->to = trim(fgets(STDIN));
                                 $this->type = "Transfer";
+                                $this->from = $authuseremail;
                                 if (!filter_var($this->to, FILTER_VALIDATE_EMAIL)) {
                                     echo "It is not an appropriate email address" . PHP_EOL;
                                 }
@@ -196,6 +202,7 @@ class App
                                 ) {
                                     $transaction->transactionKeyValues(
                                         amount: $this->amount,
+                                        from: $this->from,
                                         to: $this->to,
                                         type: $this->type,
                                         file: $this->file,
@@ -232,7 +239,7 @@ class App
                                 $this->check_email_exists = $login->filterEmail(
                                     array: $transactions,
                                     email: $authuseremail,
-                                    filterBy: 'to'
+                                    filterBy: 'from'
                                 );
                                 $transaction->viewYourTransactions(array: $this->check_email_exists);
                             }

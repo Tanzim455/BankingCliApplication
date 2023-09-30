@@ -8,6 +8,7 @@ class Transaction
 {
     use FileWriting;
     public function transactionKeyValues(
+        string $from,
         string $to,
         string $type,
         float $amount,
@@ -15,8 +16,8 @@ class Transaction
         $file,
         string $transactionFilePath
     ): void {
-        $transaction_keys = ['to', 'type', 'amount'];
-        $transaction_values = [$to, $type, $amount];
+        $transaction_keys = ['from', 'to', 'type', 'amount'];
+        $transaction_values = [$from, $to, $type, $amount];
         $transaction_array_combine = array_combine($transaction_keys, $transaction_values);
         array_push($array, $transaction_array_combine);
 
@@ -32,32 +33,7 @@ class Transaction
             echo "Sorry The amount is a negative number";
         }
     }
-    // function addorDeductBalance(
-    //     array $array,
-    //     string $email,
-    //     string $type,
-    //     float $amount,
-    //     $file,
-    //     string $userFilePath
-    // ): void {
-    //     $filtered_email = array_filter($array, fn ($u) => $u['email'] == $email);
 
-
-
-    //     //Get array keys 
-    //     $array_key_index = array_keys($filtered_email)[0];
-
-
-
-    //     if ($type == "WithDraw") {
-    //         $array[$array_key_index]['balance'] -= $amount;
-    //     }
-
-    //     if ($type == "Deposit") {
-    //         $array[$array_key_index]['balance'] += $amount;
-    //     }
-    //     $this->write(array: $array, file: $file, filePath: $userFilePath, variableName: "users");
-    // }
     public function addorDeductBalance(
         array $array,
         string $email,
@@ -96,11 +72,12 @@ class Transaction
     {
 
         foreach ($array as $arr) {
+            $from = $arr['from'];
             $to = $arr['to'];
             $type = $arr['type'];
             $amount = $arr['amount'];
 
-
+            echo "From " . $from . "\n";
             echo "To: " . $to . "\n";
             echo "Type: " . $type . "\n";
             echo "Amount: $" . $amount . "\n\n";
