@@ -21,7 +21,7 @@ class App
     public $file;
     public array $users;
     public bool|array $check_email_exists;
-    // public array $transactions;
+
     public float $amount;
     public string $from;
     public string $to;
@@ -303,9 +303,9 @@ class App
                         array: $this->users,
                     );
                 }
-                if ($readline == 3) {
-                    exit();
-                }
+            }
+            if ($readline == MenuNumbers::THIRD) {
+                exit();
             }
         }
     }
