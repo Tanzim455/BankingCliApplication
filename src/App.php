@@ -165,71 +165,117 @@ class App
                                 }
                             }
                             if ($loginreadline == MenuNumbers::SEVEN) {
-                            }
+                                echo "Enter the amount to transfer \n";
+                                $this->amount = floatval(trim(fgets(STDIN)));
+                                echo "Enter the email of receiptment \n";
+                                $this->to = trim(fgets(STDIN));
+                                $this->type = "Transfer";
+                                if (!filter_var($this->to, FILTER_VALIDATE_EMAIL)) {
+                                    echo "It is not an appropriate email address" . PHP_EOL;
+                                }
+                                if ($this->to == $authuseremail) {
+                                    echo "Sorry you cant transfer money to yourself try deposit option" . PHP_EOL;
+                                }
+                                $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
+                                if (file_exists('transactions.php')) {
+                                    include 'transactions.php';
+                                }
 
-                            if ($loginreadline == MenuNumbers::NINE) {
-                                exit();
+
+                                if (!isset($transactions)) {
+                                    $transactions = [];
+                                }
+                                if ($this->amount > 0 && $this->amount < $balance && $this->to !== $authuseremail) {
+                                    $transaction->transactionKeyValues(
+                                        amount: $this->amount,
+                                        to: $this->to,
+                                        type: $this->type,
+                                        file: $this->file,
+                                        transactionFilePath: $this->transactionFilePath,
+                                        array: $transactions
+
+
+                                    );
+                                    if (file_exists('output.php')) {
+                                        include 'output.php';
+                                    }
+
+
+                                    $transaction->addorDeductBalance(
+                                        array: $users,
+                                        email: $authuseremail,
+                                        type: $this->type,
+                                        amount: $this->amount,
+                                        file: $this->file,
+                                        userFilePath: $this->phpFilePath,
+                                        receiptentemail: $this->to
+                                    );
+                                }
+
+                                if ($loginreadline == MenuNumbers::NINE) {
+                                    exit();
+                                }
                             }
                         }
                     }
+
+                    if (!isset($users)) {
+                        echo "Sorry you dont have any email here please register";
+                    }
                 }
+                if ($readline == MenuNumbers::SECOND) {
 
-                if (!isset($users)) {
-                    echo "Sorry you dont have any email here please register";
-                }
-            }
-            if ($readline == MenuNumbers::SECOND) {
-
-                // var_dump($users);
-                echo "Enter your email \n";
-                $this->email = trim(fgets(STDIN));
-                echo "Enter your password \n";
-                $this->password = trim(fgets(STDIN));
-                echo "Enter your name \n";
-                $this->name = trim(fgets(STDIN));
-                echo "Enter your balance \n";
-                $this->balance = floatval(trim(fgets(STDIN)));
+                    // var_dump($users);
+                    echo "Enter your email \n";
+                    $this->email = trim(fgets(STDIN));
+                    echo "Enter your password \n";
+                    $this->password = trim(fgets(STDIN));
+                    echo "Enter your name \n";
+                    $this->name = trim(fgets(STDIN));
+                    echo "Enter your balance \n";
+                    $this->balance = floatval(trim(fgets(STDIN)));
 
 
 
 
-                // $this->filePathExists();
-                if (file_exists('output.php')) {
-                    include 'output.php';
-                }
-                if (isset($users)) {
-                    $this->filePathExists();
+                    // $this->filePathExists();
+                    if (file_exists('output.php')) {
+                        include 'output.php';
+                    }
+                    if (isset($users)) {
+                        $this->filePathExists();
 
 
-                    $this->check_email_exists = Registration::checkUserEmailExists(
-                        array: $users,
-                        email: $this->email
+                        $this->check_email_exists = Registration::checkUserEmailExists(
+                            array: $users,
+                            email: $this->email
+                        );
+                    } else {
+                        $this->check_email_exists = false;
+                    }
+                    if ($this->check_email_exists) {
+
+                        echo "The email already exists in database";
+                    }
+                    if (!isset($users)) {
+                        $this->users = [];
+                    }
+
+                    $registration->register(
+                        email: $this->email,
+                        password: $this->password,
+                        name: $this->name,
+                        balance: $this->balance,
+
+                        file: $this->file,
+                        phpFilePath: $this->phpFilePath,
+                        check_email_exists: $this->check_email_exists,
+                        array: $this->users,
                     );
-                } else {
-                    $this->check_email_exists = false;
                 }
-                if ($this->check_email_exists) {
-
-                    echo "The email already exists in database";
+                if ($readline == 3) {
+                    exit();
                 }
-                if (!isset($users)) {
-                    $this->users = [];
-                }
-
-                $registration->register(
-                    email: $this->email,
-                    password: $this->password,
-                    name: $this->name,
-                    balance: $this->balance,
-
-                    file: $this->file,
-                    phpFilePath: $this->phpFilePath,
-                    check_email_exists: $this->check_email_exists,
-                    array: $this->users,
-                );
-            }
-            if ($readline == 3) {
-                exit();
             }
         }
     }
