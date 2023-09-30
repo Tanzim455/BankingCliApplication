@@ -176,6 +176,10 @@ class App
                                 if ($this->to == $authuseremail) {
                                     echo "Sorry you cant transfer money to yourself try deposit option" . PHP_EOL;
                                 }
+                                $this->check_email_exists = $login->checkEmailExists(array: $users, email: $this->to);
+                                if (!$this->check_email_exists) {
+                                    echo "The email does not exist in database";
+                                }
                                 $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
                                 if (file_exists('transactions.php')) {
                                     include 'transactions.php';
@@ -185,7 +189,11 @@ class App
                                 if (!isset($transactions)) {
                                     $transactions = [];
                                 }
-                                if ($this->amount > 0 && $this->amount < $balance && $this->to !== $authuseremail) {
+                                if (
+                                    $this->amount > 0 && $this->amount < $balance && $this->to !== $authuseremail
+                                    && $this->check_email_exists
+
+                                ) {
                                     $transaction->transactionKeyValues(
                                         amount: $this->amount,
                                         to: $this->to,

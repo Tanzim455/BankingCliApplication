@@ -41,4 +41,13 @@ class Login
             return $balance;
         }
     }
+    function checkEmailExists(array $array, string $email): bool
+    {
+        $check_email_exsist = array_filter($array, fn ($u) => $u['email'] == $email);
+        if ($check_email_exsist) {
+            return true;
+        }
+
+        return false;
+    }
 }
