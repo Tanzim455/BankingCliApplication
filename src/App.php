@@ -24,6 +24,7 @@ class App
     // public array $transactions;
     public float $amount;
     public string $to;
+
     public string $type;
 
 
@@ -102,6 +103,21 @@ class App
 
 
                                     );
+                                    if (file_exists('output.php')) {
+                                        include 'output.php';
+                                    }
+
+
+                                    $updateBalance = $transaction->addorDeductBalance(
+                                        array: $users,
+                                        email: $authuseremail,
+                                        type: $this->type,
+                                        amount: $this->amount,
+                                        file: $this->file,
+                                        userFilePath: $this->phpFilePath,
+                                    );
+
+                                    var_dump($updateBalance);
                                 }
                             }
                             if ($loginreadline == MenuNumbers::NINE) {
