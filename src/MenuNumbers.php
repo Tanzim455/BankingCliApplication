@@ -13,6 +13,6 @@ class MenuNumbers
     const FIVE = 5;
     const SIX = 6;
     const SEVEN = 7;
-    const EIGHT = 7;
+    const EIGHT = 8;
     const NINE = 9;
 }

@@ -20,7 +20,7 @@ class App
     public  float $balance;
     public $file;
     public array $users;
-    public bool $check_email_exists;
+    public bool|array $check_email_exists;
     // public array $transactions;
     public float $amount;
     public string $to;
@@ -219,10 +219,25 @@ class App
                                         receiptentemail: $this->to
                                     );
                                 }
+                            }
+                            if ($loginreadline == MenuNumbers::EIGHT) {
 
-                                if ($loginreadline == MenuNumbers::NINE) {
-                                    exit();
+
+                                if (file_exists('transactions.php')) {
+                                    include 'transactions.php';
                                 }
+                                if (!isset($transactions)) {
+                                    echo "Sorry you dont have any transactions";
+                                }
+                                $this->check_email_exists = $login->filterEmail(
+                                    array: $transactions,
+                                    email: $authuseremail,
+                                    filterBy: 'to'
+                                );
+                                $transaction->viewYourTransactions(array: $this->check_email_exists);
+                            }
+                            if ($loginreadline == MenuNumbers::NINE) {
+                                exit();
                             }
                         }
                     }

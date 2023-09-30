@@ -88,7 +88,22 @@ class Transaction
             $array[$array_key_index_of_authenticated_user]['balance'] -= $amount;
             $array[$array_key_index_of_receiptent_user]["balance"] += $amount;
         }
-        // var_dump($array);
+
         $this->write(array: $array, file: $file, filePath: $userFilePath, variableName: "users");
+    }
+
+    public function viewYourTransactions(array $array)
+    {
+
+        foreach ($array as $arr) {
+            $to = $arr['to'];
+            $type = $arr['type'];
+            $amount = $arr['amount'];
+
+
+            echo "To: " . $to . "\n";
+            echo "Type: " . $type . "\n";
+            echo "Amount: $" . $amount . "\n\n";
+        }
     }
 }
