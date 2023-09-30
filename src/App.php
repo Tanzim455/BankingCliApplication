@@ -76,7 +76,7 @@ class App
                                 echo "Your balance is $balance\n";
                             }
                             if ($loginreadline == MenuNumbers::FIVE) {
-                                echo "Enter the amount to deposit \n";
+                                echo "Enter the amount to withdraw \n";
                                 $this->amount = floatval(trim(fgets(STDIN)));
                                 $this->to = $authuseremail;
                                 $this->type = "WithDraw";
@@ -115,6 +115,7 @@ class App
                                         amount: $this->amount,
                                         file: $this->file,
                                         userFilePath: $this->phpFilePath,
+                                        receiptentemail: null
                                     );
                                 }
                             }
@@ -159,8 +160,11 @@ class App
                                         amount: $this->amount,
                                         file: $this->file,
                                         userFilePath: $this->phpFilePath,
+                                        receiptentemail: null
                                     );
                                 }
+                            }
+                            if ($loginreadline == MenuNumbers::SEVEN) {
                             }
 
                             if ($loginreadline == MenuNumbers::NINE) {

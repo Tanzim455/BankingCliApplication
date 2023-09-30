@@ -32,29 +32,61 @@ class Transaction
             echo "Sorry The amount is a negative number";
         }
     }
-    function addorDeductBalance(
+    // function addorDeductBalance(
+    //     array $array,
+    //     string $email,
+    //     string $type,
+    //     float $amount,
+    //     $file,
+    //     string $userFilePath
+    // ): void {
+    //     $filtered_email = array_filter($array, fn ($u) => $u['email'] == $email);
+
+
+
+    //     //Get array keys 
+    //     $array_key_index = array_keys($filtered_email)[0];
+
+
+
+    //     if ($type == "WithDraw") {
+    //         $array[$array_key_index]['balance'] -= $amount;
+    //     }
+
+    //     if ($type == "Deposit") {
+    //         $array[$array_key_index]['balance'] += $amount;
+    //     }
+    //     $this->write(array: $array, file: $file, filePath: $userFilePath, variableName: "users");
+    // }
+    public function addorDeductBalance(
         array $array,
         string $email,
         string $type,
         float $amount,
         $file,
+        ?string $receiptentemail,
         string $userFilePath
     ): void {
         $filtered_email = array_filter($array, fn ($u) => $u['email'] == $email);
 
 
 
-        //Get array keys 
-        $array_key_index = array_keys($filtered_email)[0];
 
+        //Get array keys 
+        $array_key_index_of_authenticated_user = array_keys($filtered_email)[0];
 
 
         if ($type == "WithDraw") {
-            $array[$array_key_index]['balance'] -= $amount;
+            $array[$array_key_index_of_authenticated_user]['balance'] -= $amount;
         }
-
         if ($type == "Deposit") {
-            $array[$array_key_index]['balance'] += $amount;
+            $array[$array_key_index_of_authenticated_user]['balance'] += $amount;
+        }
+        if ($type == "Transfer") {
+            $receiptentemail = array_filter($array, fn ($u) => $u['email'] == $receiptentemail);
+            $array_key_index_of_receiptent_user = array_keys($receiptentemail)[0];
+            $array[$array_key_index_of_authenticated_user]['balance'] -= $amount;
+            $array[$array_key_index_of_receiptent_user]["balance"] += $amount;
         }
         $this->write(array: $array, file: $file, filePath: $userFilePath, variableName: "users");
     }
