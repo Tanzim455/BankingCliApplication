@@ -80,27 +80,29 @@ class App
                                 $this->to = $authuseremail;
                                 $this->type = "WithDraw";
 
-                                // if (!isset($transactions)) {
-                                //     $transactions = [];
-                                // }
+
+                                $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
+
                                 if (file_exists('transactions.php')) {
                                     include 'transactions.php';
                                 }
 
-                                // var_dump($transactions);
+
                                 if (!isset($transactions)) {
                                     $transactions = [];
                                 }
-                                $transaction->transactionKeyValues(
-                                    amount: $this->amount,
-                                    to: $this->to,
-                                    type: $this->type,
-                                    file: $this->file,
-                                    transactionFilePath: $this->transactionFilePath,
-                                    array: $transactions
+                                if ($this->amount < $balance && $this->amount > 0) {
+                                    $transaction->transactionKeyValues(
+                                        amount: $this->amount,
+                                        to: $this->to,
+                                        type: $this->type,
+                                        file: $this->file,
+                                        transactionFilePath: $this->transactionFilePath,
+                                        array: $transactions
 
 
-                                );
+                                    );
+                                }
                             }
                             if ($loginreadline == MenuNumbers::NINE) {
                                 exit();
