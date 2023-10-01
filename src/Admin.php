@@ -46,11 +46,10 @@ class Admin
             echo "Balance: $" . $amount . "\n\n";
         }
     }
-    public function viewTransactionsofSpecificUser(array $transactions)
-    {
-    }
+
     public function login(
-        Login $login
+        Login $login,
+        Transaction $transaction
     ) {
         if (file_exists('admins.php')) {
             include 'admins.php';
@@ -75,8 +74,23 @@ class Admin
                     $this->viewTransactions();
                 }
                 if ($readline == MenuNumbers::THIRD) {
-                    echo "Enter your email \n";
+                    echo "Enter specific users email\n";
                     $this->email = trim(fgets(STDIN));
+                    if (file_exists('transactions.php')) {
+                        include 'transactions.php';
+                    }
+                    if (!isset($transactions)) {
+                        echo "Transactions dont exist in database";
+                    }
+                    $filtered_email = $login->filterEmail(
+                        array: $transactions,
+                        email: $this->email,
+                        filterBy: 'from'
+                    );
+                    if (!$filtered_email) {
+                        echo "The filtered email does not exist";
+                    }
+                    $transaction->viewYourTransactions(array: $filtered_email);
                 }
                 if ($readline == MenuNumbers::THIRD) {
                     exit();

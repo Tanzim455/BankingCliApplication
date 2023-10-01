@@ -68,7 +68,7 @@ class Transaction
         $this->write(array: $array, file: $file, filePath: $userFilePath, variableName: "users");
     }
 
-    public function viewYourTransactions(array $array)
+    public function viewYourTransactions(array $array): void
     {
 
         foreach ($array as $arr) {
