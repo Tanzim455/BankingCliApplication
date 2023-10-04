@@ -236,17 +236,19 @@ class App
                                     include 'transactions.php';
                                 }
                                 if (!isset($transactions)) {
-                                    echo "Sorry you dont have any transactions";
+                                    echo "Sorry you dont have any transactions \n";
                                 }
-                                $this->check_email_exists = $login->filterEmail(
-                                    array: $transactions,
-                                    email: $authuseremail,
-                                    filterBy: 'from'
-                                );
-                                if (empty($this->check_email_exists)) {
-                                    echo "Sorry you have no transactions \n";
+                                if (isset($transactions)) {
+                                    $this->check_email_exists = $login->filterEmail(
+                                        array: $transactions,
+                                        email: $authuseremail,
+                                        filterBy: 'from'
+                                    );
+                                    if (empty($this->check_email_exists)) {
+                                        echo "Sorry you dont have any transactions \n";
+                                    }
+                                    $transaction->viewYourTransactions(array: $this->check_email_exists);
                                 }
-                                $transaction->viewYourTransactions(array: $this->check_email_exists);
                             }
                             if ($loginreadline == MenuNumbers::NINE) {
                                 exit();
