@@ -27,10 +27,10 @@ class Transaction
     public function amountBalanceValidation(float $balance, float $amount): void
     {
         if ($amount > $balance) {
-            echo "Sorry the amount is greater than your balance";
+            echo "Sorry the amount is greater than your balance \n";
         }
         if ($amount < 0) {
-            echo "Sorry The amount is a negative number";
+            echo "Sorry The amount is a negative number \n";
         }
     }
 

@@ -55,6 +55,9 @@ class App
                 if (file_exists('output.php')) {
                     include 'output.php';
                 }
+                if (!isset($users)) {
+                    echo "Sorry you dont have any email here please register \n";
+                }
                 if (isset($users) && count($users) > 0) {
                     echo "Enter your email \n";
                     $this->email = trim(fgets(STDIN));
@@ -133,7 +136,6 @@ class App
                                 $this->type = "Deposit";
 
 
-                                // $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
 
                                 if (file_exists('transactions.php')) {
                                     include 'transactions.php';
@@ -182,11 +184,11 @@ class App
                                     echo "It is not an appropriate email address" . PHP_EOL;
                                 }
                                 if ($this->to == $authuseremail) {
-                                    echo "Sorry you cant transfer money to yourself try deposit option" . PHP_EOL;
+                                    echo "Sorry you cant transfer money to yourself try deposit option \n" . PHP_EOL;
                                 }
                                 $this->check_email_exists = $login->checkEmailExists(array: $users, email: $this->to);
                                 if (!$this->check_email_exists) {
-                                    echo "The email does not exist in database";
+                                    echo "The email does not exist in database \n";
                                 }
                                 $transaction->amountBalanceValidation(balance: $balance, amount: $this->amount);
                                 if (file_exists('transactions.php')) {
@@ -255,61 +257,57 @@ class App
                             }
                         }
                     }
-
-                    if (!isset($users)) {
-                        echo "Sorry you dont have any email here please register";
-                    }
                 }
-                if ($readline == MenuNumbers::SECOND) {
+            }
+            if ($readline == MenuNumbers::SECOND) {
 
-                    // var_dump($users);
-                    echo "Enter your email \n";
-                    $this->email = trim(fgets(STDIN));
-                    echo "Enter your password \n";
-                    $this->password = trim(fgets(STDIN));
-                    echo "Enter your name \n";
-                    $this->name = trim(fgets(STDIN));
-                    echo "Enter your balance \n";
-                    $this->balance = floatval(trim(fgets(STDIN)));
-
-
-
-
-                    // $this->filePathExists();
-                    if (file_exists('output.php')) {
-                        include 'output.php';
-                    }
-                    if (isset($users)) {
-                        $this->filePathExists();
+                // var_dump($users);
+                echo "Enter your email \n";
+                $this->email = trim(fgets(STDIN));
+                echo "Enter your password \n";
+                $this->password = trim(fgets(STDIN));
+                echo "Enter your name \n";
+                $this->name = trim(fgets(STDIN));
+                echo "Enter your balance \n";
+                $this->balance = floatval(trim(fgets(STDIN)));
 
 
-                        $this->check_email_exists = Registration::checkUserEmailExists(
-                            array: $users,
-                            email: $this->email
-                        );
-                    } else {
-                        $this->check_email_exists = false;
-                    }
-                    if ($this->check_email_exists) {
 
-                        echo "The email already exists in database";
-                    }
-                    if (!isset($users)) {
-                        $this->users = [];
-                    }
 
-                    $registration->register(
-                        email: $this->email,
-                        password: $this->password,
-                        name: $this->name,
-                        balance: $this->balance,
+                // $this->filePathExists();
+                if (file_exists('output.php')) {
+                    include 'output.php';
+                }
+                if (isset($users)) {
+                    $this->filePathExists();
 
-                        file: $this->file,
-                        phpFilePath: $this->phpFilePath,
-                        check_email_exists: $this->check_email_exists,
-                        array: $this->users,
+
+                    $this->check_email_exists = Registration::checkUserEmailExists(
+                        array: $users,
+                        email: $this->email
                     );
+                } else {
+                    $this->check_email_exists = false;
                 }
+                if ($this->check_email_exists) {
+
+                    echo "The email already exists in database";
+                }
+                if (!isset($users)) {
+                    $this->users = [];
+                }
+
+                $registration->register(
+                    email: $this->email,
+                    password: $this->password,
+                    name: $this->name,
+                    balance: $this->balance,
+
+                    file: $this->file,
+                    phpFilePath: $this->phpFilePath,
+                    check_email_exists: $this->check_email_exists,
+                    array: $this->users,
+                );
             }
             if ($readline == MenuNumbers::THIRD) {
                 exit();

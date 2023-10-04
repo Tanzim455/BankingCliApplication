@@ -33,17 +33,19 @@ class Admin
             include 'transactions.php';
         }
         if (!isset($transactions)) {
-            echo "Transactions dont exist in database";
+            echo "Transactions dont exist in database \n";
         }
-        foreach ($transactions as $transaction) {
-            $from = $transaction['from'];
-            $to = $transaction['to'];
-            $type = $transaction['type'];
-            $amount = $transaction['amount'];
-            echo "From " . $from . "\n";
-            echo "To: " . $to . "\n";
-            echo "Type: " . $type . "\n";
-            echo "Balance: $" . $amount . "\n\n";
+        if (isset($transactions)) {
+            foreach ($transactions as $transaction) {
+                $from = $transaction['from'];
+                $to = $transaction['to'];
+                $type = $transaction['type'];
+                $amount = $transaction['amount'];
+                echo "From " . $from . "\n";
+                echo "To: " . $to . "\n";
+                echo "Type: " . $type . "\n";
+                echo "Balance: $" . $amount . "\n\n";
+            }
         }
     }
 
@@ -64,36 +66,40 @@ class Admin
                 echo "The email does not exist in database";
             }
             $result = $login->login(filtered_email: $filtered_email, inputpassword: $this->password);
-            if ($result) {
-                Menu::adminMenu();
-                $readline = readline("Enter specific option \n");
-                if ($readline == MenuNumbers::FIRST) {
-                    $this->viewAllUsers();
-                }
-                if ($readline == MenuNumbers::SECOND) {
-                    $this->viewTransactions();
-                }
-                if ($readline == MenuNumbers::THIRD) {
-                    echo "Enter specific users email\n";
-                    $this->email = trim(fgets(STDIN));
-                    if (file_exists('transactions.php')) {
-                        include 'transactions.php';
+            while (true) {
+                if ($result) {
+                    Menu::adminMenu();
+                    $readline = readline("Enter specific option \n");
+                    if ($readline == MenuNumbers::FIRST) {
+                        $this->viewAllUsers();
                     }
-                    if (!isset($transactions)) {
-                        echo "Transactions dont exist in database";
+                    if ($readline == MenuNumbers::SECOND) {
+                        $this->viewTransactions();
                     }
-                    $filtered_email = $login->filterEmail(
-                        array: $transactions,
-                        email: $this->email,
-                        filterBy: 'from'
-                    );
-                    if (!$filtered_email) {
-                        echo "The filtered email does not exist";
+                    if ($readline == MenuNumbers::THIRD) {
+                        echo "Enter specific users email\n";
+                        $this->email = trim(fgets(STDIN));
+                        if (file_exists('transactions.php')) {
+                            include 'transactions.php';
+                        }
+                        if (!isset($transactions)) {
+                            echo "Transactions dont exist in database \n";
+                        }
+                        if (isset($transactions)) {
+                            $filtered_email = $login->filterEmail(
+                                array: $transactions,
+                                email: $this->email,
+                                filterBy: 'from'
+                            );
+                            if (!$filtered_email) {
+                                echo "The filtered email does not exist \n";
+                            }
+                            $transaction->viewYourTransactions(array: $filtered_email);
+                        }
                     }
-                    $transaction->viewYourTransactions(array: $filtered_email);
-                }
-                if ($readline == MenuNumbers::THIRD) {
-                    exit();
+                    if ($readline == MenuNumbers::FOUR) {
+                        exit();
+                    }
                 }
             }
         }

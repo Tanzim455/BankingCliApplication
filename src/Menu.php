@@ -18,6 +18,7 @@ class Menu
     const VIEWALLUSERS  = "1.View All Users \n";
     const VIEWALLTRANSACTIONS = "2.View All Transactions\n";
     const VIEWUSERBYTRANSACTIONS = "3.View Transaction of specific user \n";
+    const ADMINEXIT = "4.Exit \n";
 
     public static function mainMenu(): void
     {
@@ -42,6 +43,6 @@ class Menu
         echo MENU::VIEWALLUSERS;
         echo MENU::VIEWALLTRANSACTIONS;
         echo Menu::VIEWUSERBYTRANSACTIONS;
-        echo Menu::EXIT;
+        echo Menu::ADMINEXIT;
     }
 }
