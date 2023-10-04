@@ -243,6 +243,9 @@ class App
                                     email: $authuseremail,
                                     filterBy: 'from'
                                 );
+                                if (empty($this->check_email_exists)) {
+                                    echo "Sorry you have no transactions \n";
+                                }
                                 $transaction->viewYourTransactions(array: $this->check_email_exists);
                             }
                             if ($loginreadline == MenuNumbers::NINE) {
