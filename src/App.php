@@ -62,12 +62,14 @@ class App
                     $this->password = trim(fgets(STDIN));
                     $filtered_email = $login->filterEmail(array: $users, email: $this->email, filterBy: 'email');
                     if (!$filtered_email) {
-                        echo "The email does not exist in database";
+                        echo "The email does not exist in database \n";
+                    } else {
+                        $result = $login->login(filtered_email: $filtered_email, inputpassword: $this->password);
+                        $balance = $login->viewBalance(filtered_email: $filtered_email);
+                        ['email' => $authuseremail] = $login->flattenArray(filtered_email: $filtered_email);
                     }
-                    $result = $login->login(filtered_email: $filtered_email, inputpassword: $this->password);
-                    $balance = $login->viewBalance(filtered_email: $filtered_email);
-                    ['email' => $authuseremail] = $login->flattenArray(filtered_email: $filtered_email);
-                    if ($result) {
+
+                    if (isset($result)) {
                         while (true) {
                             echo Menu::loginMenu() . PHP_EOL;
 
