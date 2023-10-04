@@ -21,5 +21,19 @@ $transactions= array (
     'type' => 'Deposit',
     'amount' => 25000.0,
   ),
+  3 => 
+  array (
+    'from' => 'tanzim@gmail.com',
+    'to' => 'tanzim@gmail.com',
+    'type' => 'WithDraw',
+    'amount' => 200.0,
+  ),
+  4 => 
+  array (
+    'from' => 'tanzim@gmail.com',
+    'to' => 'tanzim@gmail.com',
+    'type' => 'Deposit',
+    'amount' => 200.0,
+  ),
 );
 ?>
