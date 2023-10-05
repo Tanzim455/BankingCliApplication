@@ -5,42 +5,35 @@ $transactions= array (
     'from' => 'tanzim@gmail.com',
     'to' => 'tanzim@gmail.com',
     'type' => 'WithDraw',
-    'amount' => 1000.0,
+    'amount' => 500.0,
   ),
   1 => 
   array (
     'from' => 'tanzim@gmail.com',
     'to' => 'tanzim@gmail.com',
-    'type' => 'WithDraw',
-    'amount' => 1000.0,
+    'type' => 'Deposit',
+    'amount' => 500.0,
   ),
   2 => 
   array (
     'from' => 'tanzim@gmail.com',
     'to' => 'tanzim@gmail.com',
     'type' => 'Deposit',
-    'amount' => 10000.0,
+    'amount' => 25000.0,
   ),
   3 => 
   array (
     'from' => 'tanzim@gmail.com',
-    'to' => 'tanzim67@gmail.com',
-    'type' => 'Transfer',
-    'amount' => 10000.0,
+    'to' => 'tanzim@gmail.com',
+    'type' => 'WithDraw',
+    'amount' => 200.0,
   ),
   4 => 
   array (
     'from' => 'tanzim@gmail.com',
     'to' => 'tanzim@gmail.com',
-    'type' => 'WithDraw',
-    'amount' => 1000.0,
-  ),
-  5 => 
-  array (
-    'from' => 'tanzim@gmail.com',
-    'to' => 'tanzim@gmail.com',
     'type' => 'Deposit',
-    'amount' => 1000.0,
+    'amount' => 200.0,
   ),
 );
 ?>
